@@ -2,6 +2,7 @@ import logo from "../../logo.svg";
 import '../style/App.css';
 import { useRef, useState } from 'react';
 import { Input, Card, Button } from "antd";
+import TodoList from "../TodoList";
 
 function App() {     
   
@@ -16,14 +17,8 @@ function App() {
   return(
 <>
 <Input ref={refdata}/>
-<Button onClick={()=>addItem()}>Button</Button>
-
-{value.map((item, index) => {
-return <Card key={index}>
-<p>{item}</p>
-</Card>
-})  
-}
+<Button onClick={addItem}>Button</Button>
+<TodoList myValue={value}/>
 </>
 );
 }
