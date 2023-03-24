@@ -3,24 +3,57 @@ import '../style/App.css';
 import { useRef, useState } from 'react';
 import { Input, Card, Button } from "antd";
 
+
 function App() {     
   
   const [value, setValue] = useState([]);
+  const [inputValue, setInputValue] = useState("")
+  const [item, setItemValue] = useState(0)
   const refdata = useRef()
-  
+  console.log('cmplt object', value);
   const addItem = () => {
-    setValue([
-      ...value, refdata.current.input.value])     
+    console.log(item)
+    if(value.length){
+      value[item] = refdata.current.input.value
+      
+      
+      // console.log('value',value[item]);
+      setValue(value)
+    } else{
+
+      setValue([
+        ...value, refdata.current.input.value]);
+      
+    }
+      setInputValue("")
+  }
+  
+const removeItem = (index)=> {
+const newList = value.filter((item, id) => index !=id);
+setValue([...newList]);
+}
+const editItem = (index)=> {
+  
+  // console.log('idx', index);
+  // const newList =[...value]
+  setInputValue(value[index])
+  setItemValue(item[index])
+  // value.splice(index, 1);
+  // setInputValue(newList);
+  // let myValue = refdata.current.input.value
   }
 
   return(
+
 <>
-<Input ref={refdata}/>
-<Button onClick={()=>addItem()}>Button</Button>
+<Input ref={refdata} value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+<Button onClick={addItem}>Button</Button>
 
 {value.map((item, index) => {
 return <Card key={index}>
 <p>{item}</p>
+<Button onClick={() => editItem(index)}>Update</Button>
+<Button onClick={() => removeItem(index)}>Remove</Button>
 </Card>
 })  
 }
